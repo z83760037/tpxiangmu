@@ -1,0 +1,1 @@
+Excel文件放vendor下  Excel.php为控制器 若配入环境路径有问题请根据自己路径去配置
