@@ -13,6 +13,7 @@ class Qiniu
     public $bucket 		= "diyigeku";//空间名
 
     /**
+     * 上传文件
      * $name 文件名
      * $filePath 文件地址
      */
@@ -35,6 +36,7 @@ class Qiniu
     }
 
     /**
+     * 删除文件
      * $delFileName  在七牛存储的文件名
      */
     public function delimage($delFileName)
