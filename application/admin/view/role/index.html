@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="__ADMIN__/layui/css/layui.css"  media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+<a href="{:url('admin/role/add')}" class="layui-btn layui-btn-sm">添加分组</a>
+<!-- <button class="layui-btn layui-btn-sm" lay-event="getCheckData" id="update">添加分组</button> -->
+<div class="layui-table-box">
+    <div class="layui-table-header">
+        <table cellspacing="0" cellpadding="0" border="0" class="layui-table">
+            <thead>
+                <tr>
+                    <th data-field="name" data-key="1-0-0" class=" layui-unselect" style="width: 200px">
+                        <div class="layui-table-cell laytable-cell-1-0-0">
+                            <span>角色名称</span>
+                        </div>
+                    </th>
+                    <th data-field="id" data-key="1-0-1" class="">
+                        <div class="layui-table-cell laytable-cell-1-0-1">
+                            <span>可视模块</span>
+                        </div>
+                    </th>
+                    <th data-field="2" data-key="1-0-2" class=" layui-table-col-special" style="width: 200px">
+                        <div class="layui-table-cell laytable-cell-1-0-2">
+                            <span>操作</span>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+           <tbody>
+                {volist name='data' id='vo'}
+                <tr data-index="0" class="">
+                    <td data-field="name" data-key="1-0-0"  class="">
+                        <div class="layui-table-cell laytable-cell-1-0-0">
+                        {$vo.name}
+                        </div>
+                    </td>
+                    <td data-field="id" data-key="1-0-1"  class="">
+                        <!-- <div class="layui-table-cell laytable-cell-1-0-1"> -->
+                            {volist name="$vo.role" id='tree'}
+                                <p style="margin: 5px 0px;">
+                                  <?php if(!empty($tree['name'])){?>
+                                        {$tree.name}
+                                  <?php }?>
+                                  <span>(</span>
+                                  {volist name = '$tree.tree' id='role'}
+                                    {$role.name},
+                                  {/volist}
+                                  <span>)</span>
+                                </p>
+                            {/volist}
+                        <!-- </div> -->
+                    </td>
+                    <td data-field="2" data-key="1-0-2" data-off="true"  class="layui-table-col-special">
+                        <div class="layui-table-cell laytable-cell-1-0-2"> 
+                            <a class="layui-btn layui-btn-xs" href="{:url('admin/role/edit',['id'=>$vo.id])}">编辑</a> 
+                            <a class="layui-btn layui-btn-danger layui-btn-xs del"  data-id={$vo.id}>删除</a> 
+                      </div>
+                    </td>
+                </tr>
+                {/volist}
+        </tbody>
+        </table>
+    </div>
+    
+
+<script type="text/javascript" src="__ADMIN__/jquery-1.8.3.min.js"></script>
+<script src="__ADMIN__/layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+<script>
+    layui.use(['table','layer'], function(){
+        var $ = layui.jquery
+        var layer = layui.layer;
+		$('.del').click(function(){
+			var id = $(this).data('id');
+            layer.confirm('是否删除', {icon: 3, title:'提示'}, function(index){
+                layer.close(index);
+                $.ajax({
+                	type:"get",
+                	url:"{:url('admin/role/del')}",
+                	data:{id:id},
+                    dataType:'json',
+                	success:function(res){
+                        var obj = $.parseJSON(res);
+                        if (obj.status == "y") {
+                            layer.msg(obj.info,{icon:1,time:1000});
+                            setTimeout(function(){window.location.reload();},1000);
+                        } else {
+                            layer.msg(obj.info,{icon:2,time:1000});
+                        }
+                	}
+                });
+            });
+
+		});
+       
+    });
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<title>layui在线调试</title>
+		<link rel="stylesheet" href="__ADMIN__/layui/css/layui.css" media="all">
+		<style>
+			body {
+				margin: 10px;
+			}
+			
+			.demo-carousel {
+				height: 200px;
+				line-height: 200px;
+				text-align: center;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="x-body">
+			<form action="" method="post" class="layui-form layui-form-pane" style='width:100%;'>
+				<div class="layui-form-item">
+					<label for="name" class="layui-form-label">
+                    <span class="x-red">*</span>权限组名
+                </label>
+					<div class="layui-input-inline">
+						<input type="text" id="name" name="name" required="" autocomplete="off" class="layui-input" lay-verify="required">
+						<!--<input type="hidden" name='op' value='add'>-->
+					</div>
+				</div>
+				<div class="layui-form-item layui-form-text">
+					<label class="layui-form-label">
+                    拥有权限
+                </label>
+					<table class="layui-table layui-input-block">
+						<tbody>
+							{volist name="data" id='vo'}
+							<tr>
+								<td style="width: 200px;">
+									<input name="ids[]" type="checkbox" value="{$vo.id}" title="{$vo.name}" lay-filter='group' id='group{$vo.id}'>
+								</td>
+								<td>
+									<div class="layui-input-block">
+										{volist name='$vo.tree' id='tree'}
+										<input name="ids[]" type="checkbox" value="{$tree.id}" title="{$tree.name}" class='group{$tree.pid}' lay-filter='group_child' check_child='group{$tree.pid}'> {/volist}
+									</div>
+
+								</td>
+							</tr>
+							{/volist}
+						</tbody>
+					</table>
+				</div>
+				<div class="layui-form-item">
+					<button class="layui-btn" lay-filter="add" lay-submit="" id='btn'>立即提交</button>
+				</div>
+			</form>
+		</div>
+
+		<script type="text/javascript" src="__ADMIN__/jquery-1.8.3.min.js"></script>
+		<script src="__ADMIN__/layui/layui.js" charset="utf-8"></script>
+		<script>
+			layui.use(['form', 'layer'], function() {
+				$ = layui.jquery;
+				var form = layui.form,
+					layer = layui.layer;
+
+				//父节点全选/全不选
+				form.on('checkbox(group)', function(data) {
+					var check = "." + data.elem.id + ""; //获取父节点的id
+					$(check).prop('checked', $(this).prop("checked")); //将和父节点id相同class的子节点选中
+					form.render(); //更新全部
+				});
+
+				//子节点
+				form.on('checkbox(group_child)', function(data) {
+					var check = '.' + data.elem.attributes['check_child'].value; //当前子节点下的check_child的值
+					var idcheck = '#' + data.elem.attributes['check_child'].value;
+					var test = 1; //定义一个初始值
+					for(var i = $(check).length - 1; i >= 0; i--) {
+						if($(check).eq(i).prop("checked")) {
+							test = 2; //当有复选框被选中时，初始值更改为2
+						}
+					}
+
+					if(test == 1) {
+						$(idcheck).prop('checked', false); //如果初始值依旧为一，说明没有子节点的复选框被选中,则将和子节点相同class的
+					} else {
+						$(idcheck).prop('checked', true); //否则将父节点全选框选中
+					}
+					form.render(); //更新全部
+
+				});
+
+				//监听提交
+				form.on('submit(add)', function(data) {
+					$("#btn").attr("disabled", "false"); //关闭提交
+					$("#btn").addClass("layui-btn-disabled"); //更改class
+
+					$.ajax({
+						url: "{:url('admin/role/addRole')}",
+						type: 'post',
+						data: $('form').serializeArray(),
+						success: function(res) {
+							var obj = $.parseJSON(res);
+              if (obj.status == "y") {
+                        layer.msg(obj.info,{icon:1,time:1000});
+
+                        setTimeout(function(){ window.location.href = "{:url('admin/role/index')}";},1000)
+                    } else {
+                        layer.msg(obj.info,{icon:2,time:1000});
+                    }
+                }
+            });
+
+					setTimeout(function() {
+						$("#btn").removeAttr("disabled");
+						$("#btn").removeClass("layui-btn-disabled");
+					}, 3000); //3秒后开启提交
+					return false;
+				});
+
+			});
+		</script>
+	</body>
+
+</html>
