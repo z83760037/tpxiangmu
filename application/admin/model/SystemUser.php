@@ -53,4 +53,11 @@ class SystemUser extends Model
         $res = $this->where('id',$id)->update($data);
         return $res;
     }
+
+    //权限修改
+    public function authEdit($data)
+    {
+        $data['actions'] = implode(',',$data['actions']);
+        return $this->where('id',$data['id'])->update(['auth' => $data['actions']]);
+    }
 }
