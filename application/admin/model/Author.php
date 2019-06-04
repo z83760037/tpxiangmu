@@ -29,10 +29,12 @@ class Author extends Model
                 $v['type'] = '后台';
             } elseif ($v['type'] == 2) {
                 $v['type'] = '前台';
+                $v['name'] = db('User')->where('id',$v['uid'])->value('name');
             }
             $v['count'] = model('Article')->bookUserCount($v['uid']);
         }
         return $data;
     }
+
 
 }

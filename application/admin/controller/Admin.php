@@ -9,9 +9,8 @@
 
 namespace app\admin\controller;
 
-use think\Controller;
 
-class Admin extends Controller
+class Admin extends Base
 {	
 	//后台用户列表
     public function index()

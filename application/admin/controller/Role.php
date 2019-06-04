@@ -9,10 +9,9 @@
 namespace app\admin\controller;
 
 
-use think\Controller;
 use  app\admin\validate\isIdNotNull;
 
-class Role extends Controller
+class Role extends Base
 {
     //用户组列表
     public function index()

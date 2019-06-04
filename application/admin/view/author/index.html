@@ -16,13 +16,13 @@
 <div class="layui-tab layui-tab-brief" lay-filter="tab">
     <ul class="layui-tab-title">
         <li lay-id="list" {eq name='type' value='1'}class="layui-this" {/eq}>
-            <a href="">作者</a>
+            <a href="{:url('author/index',['type'=>1])}">作者</a>
         </li>
         <li lay-id="list"  {eq name='type' value='2'}class="layui-this" {/eq}>
-        <a href="">待审核的作者</a>
+        <a href="{:url('author/index',['type'=>2])}">待审核的作者</a>
         </li>
         <li lay-id="list" {eq name='type' value='3'}class="layui-this" {/eq}>
-            <a href="">审核失败</a>
+            <a href="{:url('author/index',['type'=>3])}">审核失败</a>
         </li>
     </ul>
 </div>
@@ -33,49 +33,83 @@
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
+<script type="text/html" id="barDemo1">
+    <a class="layui-btn layui-btn-xs" lay-event="adopt">通过</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="notAdopt">不通过</a>
+</script>
 
 <script type="text/javascript" src="__ADMIN__/jquery-1.8.3.min.js"></script>
 <script src="__ADMIN__/layui/layui.js" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 
 <script>
+    var type = {$type};
+    console.log(type);
     layui.use(['table','layer'], function(){
         var $ = layui.jquery
         var table = layui.table;
         var layer = layui.layer;
-        table.render({
-            elem: '#test'
-            ,url:"{:url('admin/author/authorList')}"
-            ,cols: [[
-                {field:'name',  title: '姓名'}
-                ,{field:'type', title: '用户分组'}
-                ,{field:'count', title:'文章数'}
-                ,{fixed: 'right', title:'操作', toolbar: '#barDemo'}
-            ]]
+        if (type == 1) {
+            table.render({
+                elem: '#test'
+                ,url:"{:url('admin/author/authorList')}"
+                ,cols: [[
+                    {field:'name',  title: '姓名'}
+                    ,{field:'type', title: '用户分组'}
+                    ,{field:'count', title:'文章数'}
+                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo'}
+                ]]
+                ,page: true
+            });
+        } else if (type == 2) {
+            table.render({
+                elem: '#test'
+                ,url:"{:url('admin/author/authorExamine')}"
+                ,cols: [[
+                    {field:'user',  title: '姓名',templet: '<div>{{d.user.name}}</div>'}
+                    ,{field:'created', title: '申请时间'}
+                    ,{field:'count', title:'文章数'}
+                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo1'}
+                ]]
+                ,page: true
+            });
+        } else if (type == 3) {
+            table.render({
+                elem: '#test'
+                ,url:"{:url('admin/author/authorExamineFail')}"
+                ,cols: [[
+                    {field:'user',  title: '姓名',templet: '<div>{{d.user.name}}</div>'}
+                    ,{field:'created', title: '申请时间'}
+                    ,{field:'count', title:'文章数'}
+                    ,{field:'count', title:'操作人'}
+                ]]
+                ,page: true
+            });
+        }
 
-            ,page: true
-
-        });
 
         //监听行工具事件
         table.on('tool(test)', function(obj){
             var data = obj.data;
             var id = data.id;
-            //console.log(obj)
+            var uid = data.uid;
+            // console.log(uid);
             if(obj.event === 'del'){
                 layer.confirm('真的删除行么', function(index){
-                    obj.del();
+                    // obj.del();
                     layer.close(index);
                     $.ajax({
                         type:'get',
-                        url:"{:url('admin/delAdmin')}",
+                        url:"{:url('author/del')}",
                         data:{id:id},
                         success:function(res){
                             var obj = JSON.parse(res);
                             if (obj.status == "y") {
                                 layer.msg(obj.info,{icon:1,time:1000});
+                                setTimeout(function(){window.location.reload();},1000);
                             } else {
                                 layer.msg(obj.info,{icon:2,time:1000});
+                                setTimeout(function(){window.location.reload();},1000);
                             }
                         }
                     })
@@ -93,16 +127,25 @@
                         // window.location.reload();
                     }
                 });
-            } else if (obj.event === 'quanxian'){
-                var index=layer.open({
-                    type: 2,
-                    title:"权限管理",
-                    area: ['650px', '400px'],
-                    shadeClose: true,
-                    content: "{:url('admin/Auth')}?id="+id,
-                    end: function () {
-                        // window.location.reload();
-                    }
+            } else if (obj.event === 'adopt'){
+                layer.confirm('确定通过', function(index){
+                    // obj.del();
+                    layer.close(index);
+                    $.ajax({
+                        type:'get',
+                        url:"{:url('author/adopt')}",
+                        data:{id : id, uid : uid},
+                        success:function(res){
+                            var obj = JSON.parse(res);
+                            if (obj.status == "y") {
+                                layer.msg(obj.info,{icon:1,time:1000});
+                                setTimeout(function(){window.location.reload();},1000);
+                            } else {
+                                layer.msg(obj.info,{icon:2,time:1000});
+                                setTimeout(function(){window.location.reload();},1000);
+                            }
+                        }
+                    })
                 });
             }
         });

@@ -10,9 +10,8 @@ namespace app\admin\controller;
 
 
 use app\admin\validate\isIdNotNull;
-use think\Controller;
 
-class Author extends Controller
+class Author extends Base
 {
     public function index()
     {
@@ -58,6 +57,59 @@ class Author extends Controller
         } else {
             return json_encode(['info' => '该账户已经设为作者', 'status' => 'n']);
         }
+    }
 
+    //作者待审核列表
+    public function authorExamine($page,$limit)
+    {
+        $data = model('AuthorExamine')->getAuthorDataAll($page,$limit);
+        //总数
+        $num = model('AuthorExamine')->where('status',0)->count();
+        $arr = array(
+            'code'  => 0,
+            'msg'   => '',
+            'count' => $num,
+            'data'  => $data,
+        );
+        echo json_encode($arr);
+    }
+
+    //作者审核失败列表
+    public function authorExamineFail($page,$limit)
+    {
+
+    }
+
+    //删除作者
+    public function del($id)
+    {
+        $is = (new isIdNotNull())->goCheck();
+        if ($is) {
+            return json_encode(['info' => $is, 'status' => 'n']);
+        }
+        $status = model('Author')->where('id',$id)->delete();
+
+        if ($status) {
+            return json_encode(['info'=>'删除成功','status'=>'y']);
+        } else {
+            return json_encode(['info'=>'删除失败','status'=>'n']);
+        }
+    }
+
+    //通过
+    public function adopt($id,$uid)
+    {
+        $is = (new isIdNotNull())->goCheck();
+        if ($is) {
+            return json_encode(['info' => $is, 'status' => 'n']);
+        }
+
+        $res = model('AuthorExamine')->adopt($id,$uid);
+
+        if ($res) {
+            return json_encode(['info' => '成功', 'status' => 'y']);
+        } else {
+            return json_encode(['info' => '失败', 'status' => 'n']);
+        }
     }
 }

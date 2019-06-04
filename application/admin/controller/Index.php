@@ -1,10 +1,8 @@
 <?php
 namespace app\admin\controller;
 
-use think\Controller;
-// use app\admin\common\Adminuser;
 
-class Index extends Controller
+class Index extends Base
 {
     public function index()
     {	
