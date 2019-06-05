@@ -4,6 +4,7 @@
  * User: VULCAN
  * Date: 2019/5/31
  * Time: 14:47
+ * 作者管理
  */
 
 namespace app\admin\controller;
@@ -45,7 +46,7 @@ class Author extends Base
         if ($is) {
             return json_encode(['info' => $is, 'status' => 'n']);
         }
-        $user = model('Author')->where('uid',$id)->find();
+        $user = model('Author')->where('uid',$id)->where('type',1)->find();
         if (empty($user)) {
             $res = model('Author')->save(['uid' => $id, 'type' => 1]);
 
@@ -77,7 +78,16 @@ class Author extends Base
     //作者审核失败列表
     public function authorExamineFail($page,$limit)
     {
-
+        $data = model('AuthorExamine')->getAuthorFailDataAll($page,$limit);
+        //总数
+        $num = model('AuthorExamine')->where('status',2)->count();
+        $arr = array(
+            'code'  => 0,
+            'msg'   => '',
+            'count' => $num,
+            'data'  => $data,
+        );
+        echo json_encode($arr);
     }
 
     //删除作者
@@ -110,6 +120,23 @@ class Author extends Base
             return json_encode(['info' => '成功', 'status' => 'y']);
         } else {
             return json_encode(['info' => '失败', 'status' => 'n']);
+        }
+    }
+
+    //不通过
+    public function failed($id)
+    {
+        $is = (new isIdNotNull())->goCheck();
+        if ($is) {
+            return json_encode(['info' => $is, 'status' => 'n']);
+        }
+
+        $res = model('AuthorExamine')->failed($id);
+
+        if ($res) {
+            return json_encode(['info' => '修改成功', 'status' => 'y']);
+        } else {
+            return json_encode(['info' => '修改失败', 'status' => 'n']);
         }
     }
 }

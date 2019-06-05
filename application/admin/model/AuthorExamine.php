@@ -24,6 +24,10 @@ class AuthorExamine extends Model
         return $this->belongsTo('User','uid','id');
     }
 
+    public function admin() {
+        return $this->belongsTo('SystemUser','admin','id');
+    }
+
     public function getAuthorDataAll($page,$size)
     {
         $lit = ($page-1)*$size;
@@ -34,10 +38,21 @@ class AuthorExamine extends Model
         return $data;
     }
 
+    //作者审核失败数据列表
+    public function getAuthorFailDataAll($page,$size)
+    {
+        $lit = ($page-1)*$size;
+        $data = $this->with(['user','admin'])->where('status',2)->limit($lit,$size)->select();
+        foreach ($data as &$v) {
+            $v['count'] = model('Article')->bookUserCount($v['uid']);
+        }
+        return $data;
+    }
+
     //通过
     public function adopt($id,$uid)
     {
-        $admin = session('admin');
+        $admin = session('admin');//当前管理员
         Db::startTrans();
         try{
             $this->where('id',$id)->update(['status' => 1, 'admin' => $admin['id']]);
@@ -49,4 +64,13 @@ class AuthorExamine extends Model
             return false;
         }
     }
+
+    //审核失败
+    public function failed($id)
+    {
+        $admin = session('admin');//当前管理员
+        $res = $this->where('id',$id)->update(['status' => 2, 'admin' => $admin['id']]);
+        return $res;
+    }
+
 }
