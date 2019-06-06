@@ -8,7 +8,9 @@
 
 namespace app\admin\controller;
 
+
 use app\admin\validate\isIdNotNull;
+
 
 class ArticleCate extends Base
 {
