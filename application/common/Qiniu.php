@@ -1,7 +1,7 @@
 <?php
 namespace app\common;
-vendor('qiniu.php-sdk.autoload');
 // 引入鉴权类
+include __DIR__.'/../../vendor/qiniu/php-sdk/autoload.php';
 use Qiniu\Auth;
 // 引入上传类
 use Qiniu\Storage\UploadManager;
