@@ -34,5 +34,6 @@ return [
     'taglib_end'   => '}',
     'tpl_replace_string' => [
         '__ADMIN__' => '/static/admin',
+        '__STATIC__' => '/static',
     ]
 ];

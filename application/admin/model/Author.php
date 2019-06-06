@@ -18,6 +18,11 @@ class Author extends Model
     protected $createTime = 'created';//添加时间
     protected $updateTime = 'updated';//修改时间
 
+    public function user()
+    {
+        return $this->belongsTo('User','cid','id');
+    }
+
     //作者数据
     public function getAuthorData($page,$limit)
     {
