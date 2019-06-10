@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="__ADMIN__/layui/css/layui.css"  media="all">
+    <style>
+        .demoTable{
+            margin-top: 10px;
+        }
+    </style>
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+
+<div class="demoTable layui-form layui-form-pane">
+
+    <!--<div class="layui-inline">-->
+    <!--<input class="layui-input" name="id" id="demoReload" autocomplete="off" placeholder="搜索用户名">-->
+    <!--</div>-->
+    <div class="layui-inline">
+        <select name="cate_id" id="cate">
+            <option value="0">请选择分类</option>
+            {volist name='cate' id='vo'}
+            <option value="{$vo.id}">{$vo.name}</option>
+            {/volist}
+        </select>
+    </div>
+    <button class="layui-btn" data-type="reload" id="sousuo">搜索</button>
+
+</div>
+<table class="layui-hide" id="test" lay-filter="test"></table>
+<script type="text/html" id="barDemo">
+
+    <a class="layui-btn layui-btn-danger layui-btn-xs"   lay-event="article">
+    选择</a>
+
+</script>
+
+<script type="text/javascript" src="__ADMIN__/jquery-1.8.3.min.js"></script>
+<script src="__ADMIN__/layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+<script>
+    layui.use(['table','layer'], function(){
+        var $ = layui.jquery;
+        var table = layui.table;
+        var layer = layui.layer;
+        var tableIns = table.render({
+            elem: '#test'
+            ,url:"{:url('admin/headline/articleOpen')}?type=1"
+            ,cols: [[
+                {field:'title',width:100, title: '文章标题'}
+                ,{field:'name',width:100,title: '作者'}
+                ,{field:'cid',  title: '栏目',templet: '<div>{{d.cate.name}}</div>'}
+                ,{field:'onlineTime', title:'上线时间'}
+                ,{field:'hits', title:'浏览量'}
+                ,{field:'commen', title: '评论数'}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo'}
+            ]]
+            ,page: true
+        });
+
+
+        $('#sousuo').click(function(){
+            tableIns.reload({
+                where: { //设定异步数据接口的额外参数，任意设
+                    cate:$('#cate').val(),
+                }
+                ,page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+        });
+
+        //监听行工具事件
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            var id = data.id;
+            var title = data.title;
+            var img   = data.img;
+            //console.log(obj)
+            if(obj.event === 'article'){
+                $("#title" , parent.document).val(title);
+                $("#url" , parent.document).val('http://www.daneiwai.com/article/'+id);
+                $("#aid" , parent.document).val(id);
+                $("#brand_img" , parent.document).val(img);
+                $("#demo1" , parent.document).attr('src', img);
+                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                //再执行关闭
+                parent.layer.close(index);
+            }
+        });
+    });
+</script>
+</body>
+</html>

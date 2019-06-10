@@ -52,6 +52,7 @@ class Admin extends Base
         $res = model('SystemUser')->addAdminUser($data);
 
         if ($res) {
+            model('SystemLog')->addSystemLog('添加管理员-'.$res);
             return json_encode(['info' => '添加成功', 'status' => 'y']);
         } else {
             return json_encode(['info' => '添加失败', 'status' => 'n']);
