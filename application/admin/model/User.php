@@ -26,7 +26,7 @@ class User extends Model
         if ($name) {
             $where = ['name'=>$name];
         }
-        $data = $this->limit($size,$limit)->where($where)->select();
+        $data = $this->limit($size,$limit)->where($where)->order('created desc')->select();
         foreach ($data as &$v) {
             $v['count'] = model('Article')->bookUserCount($v['id']);
         }
