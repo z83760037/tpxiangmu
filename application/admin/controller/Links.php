@@ -55,7 +55,6 @@ class Links extends Base
         $res = model('Links')->addLinksData($data);
 
         if ($res) {
-            $data =  model('Links')->find($res);
             model('SystemLog')->addSystemLog('-添加友情链接-'.$data['name']);
             return json_encode(['info' => '添加成功', 'status' => 'y']);
         } else {
