@@ -39,7 +39,7 @@ class Author extends Base
         echo json_encode($arr);
     }
 
-    //设置为作者
+    //后台用户设置为作者
     public function add($id)
     {
         $is = (new isIdNotNull())->goCheck();
@@ -51,6 +51,8 @@ class Author extends Base
             $res = model('Author')->save(['uid' => $id, 'type' => 1]);
 
             if ($res) {
+                $data =  model('SystemUser')->find($id);
+                model('SystemLog')->addSystemLog('-设置用户为作者-'.$data['name']);
                 return json_encode(['info' => '设置成功', 'status' => 'y']);
             } else {
                 return json_encode(['info' => '设置失败', 'status' => 'n']);
@@ -100,6 +102,8 @@ class Author extends Base
         $status = model('Author')->where('id',$id)->delete();
 
         if ($status) {
+            $name =  model('Author')->getAuthorById($id);
+            model('SystemLog')->addSystemLog('-添加文章栏目-'.$name);
             return json_encode(['info'=>'删除成功','status'=>'y']);
         } else {
             return json_encode(['info'=>'删除失败','status'=>'n']);
@@ -117,6 +121,8 @@ class Author extends Base
         $res = model('AuthorExamine')->adopt($id,$uid);
 
         if ($res) {
+            $name =  model('Author')->getAuthorById($id);
+            model('SystemLog')->addSystemLog('-操作用户-'.$name.'-申请作者成功');
             return json_encode(['info' => '成功', 'status' => 'y']);
         } else {
             return json_encode(['info' => '失败', 'status' => 'n']);
@@ -134,6 +140,8 @@ class Author extends Base
         $res = model('AuthorExamine')->failed($id);
 
         if ($res) {
+            $name =  model('Author')->getAuthorById($id);
+            model('SystemLog')->addSystemLog('-操作用户-'.$name.'-申请作者失败');
             return json_encode(['info' => '修改成功', 'status' => 'y']);
         } else {
             return json_encode(['info' => '修改失败', 'status' => 'n']);

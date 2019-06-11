@@ -52,6 +52,8 @@ class Article extends Base
         $res = model('Article')->where('id',$id)->update(['status' => 1, 'onlineTime' => time()]);
 
         if ($res) {
+            $data =  model('Article')->find($id);
+            model('SystemLog')->addSystemLog('-操作文章-'.$data['title'].'-通过审核');
             return json_encode(['info' => '成功', 'status' => 'y']);
         } else {
             return json_encode(['info' => '失败', 'status' => 'n']);
@@ -69,6 +71,8 @@ class Article extends Base
         $res = model('Article')->where('id',$id)->update(['status' => 2]);
 
         if ($res) {
+            $data =  model('Article')->find($id);
+            model('SystemLog')->addSystemLog('-操作文章-'.$data['title'].'-审核失败');
             return json_encode(['info' => '成功', 'status' => 'y']);
         } else {
             return json_encode(['info' => '失败', 'status' => 'n']);
@@ -86,6 +90,8 @@ class Article extends Base
         $res = model('Article')->where('id',$id)->update(['is_delete' => 1]);
 
         if ($res) {
+            $data =  model('Article')->find($id);
+            model('SystemLog')->addSystemLog('-删除文章-'.$data['title']);
             return json_encode(['info' => '成功', 'status' => 'y']);
         } else {
             return json_encode(['info' => '失败', 'status' => 'n']);
@@ -103,6 +109,8 @@ class Article extends Base
         $res = model('Article')->where('id',$id)->update(['is_delete' => 0]);
 
         if ($res) {
+            $data =  model('Article')->find($id);
+            model('SystemLog')->addSystemLog('-恢复文章-'.$data['title']);
             return json_encode(['info' => '成功', 'status' => 'y']);
         } else {
             return json_encode(['info' => '失败', 'status' => 'n']);
@@ -120,6 +128,8 @@ class Article extends Base
         $res = model('Article')->where('id',$id)->delete();
 
         if ($res) {
+            $data =  model('Article')->find($id);
+            model('SystemLog')->addSystemLog('-彻底删除文章-'.$data['title']);
             return json_encode(['info' => '成功', 'status' => 'y']);
         } else {
             return json_encode(['info' => '失败', 'status' => 'n']);
@@ -167,6 +177,8 @@ class Article extends Base
         $res = model('Article')->save($data);
 
         if ($res) {
+            $data =  model('Article')->find($res);
+            model('SystemLog')->addSystemLog('-添加文章-'.$data['title']);
             return json_encode(['info' => '添加成功', 'status' => 'y']);
         } else {
             return json_encode(['info' => '添加失败', 'status' => 'n']);

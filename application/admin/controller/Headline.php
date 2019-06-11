@@ -27,7 +27,7 @@ class Headline extends Base
     {
         $size = ($page-1)*$limit;
         $type = request()->param('type');
-        $data = model('ArticleHeadline')->where('status' ,$type)->limit($size,$limit)->select();
+        $data = model('ArticleHeadline')->where('status' ,$type)->limit($size,$limit)->order('created desc')->select();
         $num = model('ArticleHeadline')->where('status' ,$type)->count();
 
         $arr = array(

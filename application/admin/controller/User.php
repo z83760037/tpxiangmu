@@ -47,6 +47,8 @@ class User extends Base
             $res = model('Author')->save(['uid' => $id, 'type' => 2]);
 
             if ($res) {
+                $name =  model('User')->find($id);
+                model('SystemLog')->addSystemLog('-操作用户-'.$name.'-为作者');
                 return json_encode(['info' => '设置成功', 'status' => 'y']);
             } else {
                 return json_encode(['info' => '设置失败', 'status' => 'n']);

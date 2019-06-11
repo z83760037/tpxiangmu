@@ -30,7 +30,7 @@ class ArticleCommen extends Model
 
     public function getComment($size,$limit)
     {
-        $data = $this->with(['user','article'])->limit($size,$limit)->select();
+        $data = $this->with(['user','article'])->limit($size,$limit)->order('created desc')->select();
         return $data;
     }
 }

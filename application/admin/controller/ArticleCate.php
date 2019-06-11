@@ -52,6 +52,8 @@ class ArticleCate extends Base
         $res = model('ArticleCate')->addCateData($data);
 
         if ($res) {
+            $data =  model('ArticleCate')->find($res);
+            model('SystemLog')->addSystemLog('-添加文章栏目-'.$data['name']);
             return json_encode(['info' => '添加成功', 'status' => 'y']);
         } else {
             return json_encode(['info' => '添加失败', 'status' => 'n']);
@@ -81,6 +83,8 @@ class ArticleCate extends Base
         $res = model('ArticleCate')->editCateData($data);
 
         if ($res) {
+            $data =  model('ArticleCate')->find($data['id']);
+            model('SystemLog')->addSystemLog('-修改文章栏目-'.$data['name']);
             return json_encode(['info' => '修改成功', 'status' => 'y']);
         } else {
             return json_encode(['info' => '修改失败', 'status' => 'n']);
@@ -96,6 +100,8 @@ class ArticleCate extends Base
         $res = model('ArticleCate')->reorder($id,$sort);
 
         if ($res) {
+            $data =  model('ArticleCate')->find($id);
+            model('SystemLog')->addSystemLog('-对文章栏目排序-'.$data['name']);
             return json_encode(['info' => '排序成功', 'status' => 'y']);
         } else {
             return json_encode(['info' => '排序失败', 'status' => 'n']);
@@ -114,6 +120,8 @@ class ArticleCate extends Base
         $status = model('ArticleCate')->where('id',$id)->delete();
 
         if ($status) {
+            $data =  model('ArticleCate')->find($id);
+            model('SystemLog')->addSystemLog('-删除文章栏目-'.$data['name']);
             return json_encode(['info'=>'删除成功','status'=>'y']);
         } else {
             return json_encode(['info'=>'删除失败','status'=>'n']);

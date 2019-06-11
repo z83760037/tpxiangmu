@@ -41,7 +41,7 @@ class Article extends Model
             $where .= ' and cid = '.$query['cate'];
         }
 
-        $data = $this->with(['cate'])->where($where)->limit($lit,$size)->select();
+        $data = $this->with(['cate'])->where($where)->limit($lit,$size)->order('created desc')->select();
 
         foreach ($data as &$v){
             if ($v['type'] == 1) {

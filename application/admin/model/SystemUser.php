@@ -25,7 +25,7 @@ class SystemUser extends Model
     public function getAdminAll($page,$size)
     {
         $lit = ($page-1)*$size;
-        $adminData = $this->with(['role'])->limit($lit,$size)->select();
+        $adminData = $this->with(['role'])->limit($lit,$size)->order('longtime desc')->select();
         return $adminData;
     }
 
