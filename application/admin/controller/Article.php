@@ -177,7 +177,7 @@ class Article extends Base
         $res = model('Article')->save($data);
 
         if ($res) {
-            $data =  model('Article')->find($res);
+            $data =  model('Article')->find(model('Article')->id);
             model('SystemLog')->addSystemLog('-添加文章-'.$data['title']);
             return json_encode(['info' => '添加成功', 'status' => 'y']);
         } else {

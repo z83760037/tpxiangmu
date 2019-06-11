@@ -13,6 +13,11 @@ use think\Model;
 
 class SystemLog extends Model
 {
+    //自动时间戳
+    protected $autoWriteTimestamp = true;
+    protected $createTime = 'created';//添加时间
+    protected $updateTime = false;//修改时间
+
     /*
      * 操作日志
      */
@@ -24,7 +29,6 @@ class SystemLog extends Model
             'msg'     => $admin['name'].$msg,
             'link'    => $url,
             'uid'     => $admin['id'],
-            'created' => time(),
         ];
         return $this->save($data);
     }
