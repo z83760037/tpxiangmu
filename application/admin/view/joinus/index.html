@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="__ADMIN__/layui/css/layui.css"  media="all">
+    <style type="text/css">
+        .layui-table-cell{  /*最后的pic为字段的field*/
+            height: 50px;
+            line-height: 50px;
+        }
+    </style>
+</head>
+<body>
+<button class="layui-btn" lay-event="getCheckData" id="update">添加分类</button>
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="sort">排序</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="job">职位管理</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<script type="text/html" id="showimg">
+    <img src="{{ d.img}}" width="100px" />
+</script>
+
+<script type="text/javascript" src="__ADMIN__/jquery-1.8.3.min.js"></script>
+<script src="__ADMIN__/layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+<script>
+    layui.use(['table','layer'], function(){
+        var $ = layui.jquery;
+        var table = layui.table;
+        var layer = layui.layer;
+        table.render({
+            elem: '#test'
+            ,url:"{:url('admin/joinus/open')}"
+            ,cols: [[
+                {field:'job', title: '标题'}
+                ,{field:'created', title:'创建时间'}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo'}
+            ]]
+
+            // ,page: true
+
+        });
+
+        //监听行工具事件
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            var id = data.id;
+            //console.log(obj)
+            if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    layer.close(index);
+                    $.ajax({
+                        type:'get',
+                        url:"{:url('Joinus/del')}",
+                        data:{id:id},
+                        success:function(res){
+                            var obj = JSON.parse(res);
+                            if (obj.status === "y") {
+                                layer.msg(obj.info,{icon:1,time:1000});
+                                setTimeout(function(){window.location.reload();},1000);
+                            } else {
+                                layer.msg(obj.info,{icon:2,time:1000});
+                                setTimeout(function(){window.location.reload();},1000);
+                            }
+                        }
+                    })
+                });
+            } else if(obj.event === 'edit'){
+                // console.log(id);
+                layer.open({
+                    type: 2,
+                    title:"修改",
+                    area: ['400px', '300px'],
+                    shadeClose: true,
+                    content: "{:url('Joinus/edit')}?id="+id,
+                    end: function () {
+                        // window.location.reload();
+                    }
+                });
+            } else if(obj.event === 'sort'){
+                layer.prompt(function(value, index, elem){
+                    layer.closeAll();
+                    $.ajax({
+                        url:"{:url('Joinus/rmove')}",
+                        type:"post",
+                        data:{id:id,sort:value},
+                        success: function (data) {
+                            var obj = JSON.parse(data);
+                            if (obj.status === "y") {
+                                layer.msg(obj.info,{icon:1,time:1000});
+                                setTimeout(function(){window.location.reload();},1000);
+                            } else {
+                                layer.msg(obj.info,{icon:2,time:1000});
+                                setTimeout(function(){window.location.reload();},1000);
+                            }
+                        }
+                    });
+                });
+            }else if(obj.event === 'job') {
+                var name = data.job;
+                var url = "{:url('Joinus/job')}?id="+id+"&name="+name;
+                window.location.href=url;
+            }
+        });
+
+        $('#update').click(function(){
+            var index=layer.open({
+                type: 2,
+                title:"添加",
+                area: ['400px', '300px'],
+                shadeClose: true,
+                content: "{:url('Joinus/add')}",
+            });
+        })
+    });
+</script>
+</body>
+</html>
