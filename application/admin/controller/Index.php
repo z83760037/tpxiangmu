@@ -33,8 +33,28 @@ class Index extends Base
                     ],
                     'name' => 123
                 ];
+        //用户总数
+        $userNum = model('User')->count();
+
+        //今天注册数
+        $beginToday=mktime(0,0,0,date('m'),date('d'),date('Y'));//今天零点时间戳
+        $endToday=mktime(0,0,0,date('m'),date('d')+1,date('Y'))-1;//第二天零时时间戳
+        $register = model('User')->where('created','>',$beginToday)->where('created','<',$endToday)->count();
+
+        //文章总数
+        $article = model('Article')->count();
+
+        //待审核文章数
+        $articlenum = model('Article')->where('status',0)->count();
+
         $this->assign('data',json_encode($data));
         $this->assign('data2',json_encode($data2));
+        $this->assign([
+            'usernum'  => $userNum,
+            'register' => $register,
+            'article'  => $article,
+            'articlenum' => $articlenum,
+        ]);
     	return view();
     }
 }
