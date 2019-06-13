@@ -11,15 +11,9 @@ namespace app\admin\model;
 
 use think\Db;
 use think\Exception;
-use think\Model;
 
-class ArticleCate extends Model
+class ArticleCate extends Base
 {
-    //自动时间戳
-    protected $autoWriteTimestamp = true;
-    protected $createTime = 'created';//添加时间
-    protected $updateTime = 'updated';//修改时间
-
     public function addCateData($data){
         $sort = $this->Max('sort');
         $data['sort'] = $sort+1;

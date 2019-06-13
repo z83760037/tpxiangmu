@@ -9,13 +9,9 @@
 namespace app\admin\model;
 
 
-use think\Model;
 
-class ArticleCommen extends Model
+class ArticleCommen extends Base
 {
-    //自动时间戳
-    protected $autoWriteTimestamp = true;
-    protected $createTime = 'created';//添加时间
     protected $updateTime = false;//修改时间
 
     public function user()

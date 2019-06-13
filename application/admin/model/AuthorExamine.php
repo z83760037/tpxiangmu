@@ -10,16 +10,10 @@ namespace app\admin\model;
 
 
 use think\Exception;
-use think\Model;
 use think\Db;
 
-class AuthorExamine extends Model
+class AuthorExamine extends Base
 {
-    //自动时间戳
-    protected $autoWriteTimestamp = true;
-    protected $createTime = 'created';//添加时间
-    protected $updateTime = 'updated';//修改时间
-
     public function user(){
         return $this->belongsTo('User','uid','id');
     }

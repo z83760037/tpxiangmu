@@ -9,15 +9,9 @@
 namespace app\admin\model;
 
 
-use think\Model;
 
-class ArticleNews extends Model
+class ArticleNews extends Base
 {
-    //自动时间戳
-    protected $autoWriteTimestamp = true;
-    protected $createTime = 'created';//添加时间
-    protected $updateTime = 'updated';//修改时间
-
     //列表数据
     public function getNewsFalsh($page,$limit,$type)
     {

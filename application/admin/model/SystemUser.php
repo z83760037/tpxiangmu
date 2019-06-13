@@ -11,10 +11,8 @@ namespace app\admin\model;
 
 use think\Model;
 
-class SystemUser extends Model
+class SystemUser extends Base
 {
-    protected $autoWriteTimestamp = true;
-    protected $createTime = 'createtime';
     protected $updateTime = 'longtime';
 
     public function role(){

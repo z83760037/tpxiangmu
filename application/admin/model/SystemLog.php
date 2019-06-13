@@ -9,13 +9,10 @@
 namespace app\admin\model;
 
 
-use think\Model;
 
-class SystemLog extends Model
+class SystemLog extends Base
 {
     //自动时间戳
-    protected $autoWriteTimestamp = true;
-    protected $createTime = 'created';//添加时间
     protected $updateTime = false;//修改时间
 
     /*
@@ -37,14 +34,29 @@ class SystemLog extends Model
     public function getLogData($page,$limit,$querys)
     {
         $size = ($page-1)*$limit;
+        if (!empty($querys['start'])) {
+            $startTime = strtotime($querys['start']);
+        }
 
-//        $startTime = strtotime($querys['starttime']);
-//        $endTime   = strtotime($querys['endtime']);
+        if (!empty($querys['end'])) {
+            $endTime   = strtotime($querys['end']);
+            $endTime   = $endTime+(3600*24);
+        }
+
         $where = '1=1';
         if (!empty($querys['name'])) {
             $name      = $querys['name'];
             $where .= " And u.name like '$name%'";
         }
+
+        if (!empty($startTime) && empty($endTime)) {
+            $where .= " And a.created > $startTime";
+        } elseif (empty($startTime) && !empty($endTime)) {
+            $where .= " And a.created < $endTime";
+        }elseif (!empty($startTime) && !empty($endTime)) {
+            $where .= " And a.created > $startTime And a.created < $endTime";
+        }
+
         $data = $this
             ->alias('a')
             ->join('system_user u','a.uid=u.id','left')
