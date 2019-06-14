@@ -6,7 +6,7 @@
  * Time: 16:46
  */
 
-namespace app\admin\model;
+namespace app\common\model;
 
 
 use think\Exception;

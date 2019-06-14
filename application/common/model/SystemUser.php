@@ -6,10 +6,9 @@
  * Time: 15:08
  */
 
-namespace app\admin\model;
+namespace app\common\model;
 
 
-use think\Model;
 
 class SystemUser extends Base
 {

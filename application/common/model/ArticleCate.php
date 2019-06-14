@@ -2,20 +2,19 @@
 /**
  * Created by PhpStorm.
  * User: VULCAN
- * Date: 2019/6/11
- * Time: 9:41
+ * Date: 2019/6/5
+ * Time: 16:28
  */
 
-namespace app\admin\model;
+namespace app\common\model;
 
 
 use think\Db;
+use think\Exception;
 
-class Links extends Base
+class ArticleCate extends Base
 {
-    //数据添加
-    public function addLinksData($data)
-    {
+    public function addCateData($data){
         $sort = $this->Max('sort');
         $data['sort'] = $sort+1;
         $res = $this->save($data);
@@ -23,11 +22,11 @@ class Links extends Base
     }
 
     //修改数据
-    public function editLinksData($data)
+    public function editCateData($data)
     {
         $id  = $data['id'];
         unset($data['id']);
-        $res = $this->save($data,['id' => $id]);
+        $res = $this->where('id',$id)->update($data);
         return $res;
     }
 
@@ -36,8 +35,8 @@ class Links extends Base
     {
         Db::startTrans();
         try{
-            $info = db('links')->find($id);
-            $data = db('links')->where('id','<>',$id)->order('sort asc')->select();
+            $info = db('article_cate')->find($id);
+            $data = db('article_cate')->where('id','<>',$id)->order('sort asc')->select();
             array_splice($data, $sort-1, 0, [$info]);
             if($data){
                 foreach($data as $k => $v){

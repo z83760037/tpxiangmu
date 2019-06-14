@@ -6,7 +6,7 @@
  * Time: 11:33
  */
 
-namespace app\admin\model;
+namespace app\common\model;
 
 
 

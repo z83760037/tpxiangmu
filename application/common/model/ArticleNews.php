@@ -6,7 +6,7 @@
  * Time: 16:11
  */
 
-namespace app\admin\model;
+namespace app\common\model;
 
 
 
@@ -20,8 +20,10 @@ class ArticleNews extends Base
         foreach ($data as &$v){
             if ($v['type'] == 1) {
                 $v['name'] = db('system_user')->where('id',$v['uid'])->value('name');
+                $v['nameImg'] = db('author')->where('id',$v['uid'])->value('img');
             } elseif ($v['type'] == 2) {
                 $v['name'] = db('user')->where('id',$v['uid'])->value('name');
+                $v['nameImg'] = db('user')->where('id',$v['uid'])->value('img');
             }
             $v['onlineTime'] = $v['onlineTime'] ? date('Y-m-d H:i:s',$v['onlineTime']) : '';
         }

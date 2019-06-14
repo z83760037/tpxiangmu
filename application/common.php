@@ -99,3 +99,67 @@ function isMobile()
     }
     return false;
 }
+
+//时间函数
+function formatDate($time){
+//    $time = strtotime($time);
+    $str = '';
+    if (!empty($time)){
+        $now =time();
+        $timepart = $now-$time;
+        if($timepart<= 60) //1分钟内
+        {
+            $str = "刚刚";
+        }
+        else if($timepart < 60*60 && $timepart > 60  ) //1小时内 显示多少分钟
+        {
+            $str = floor($timepart/60)."分钟前";
+        }
+        else if($timepart < 60*60*24  && $timepart > 60*60  ) //1天内 显示多少小时
+        {
+            $str = floor($timepart / (60*60))."小时前";
+        }
+        else if ($timepart < 60*60*24*7  && $timepart > 60*60*24){//一周以内
+            $str = floor($timepart / (60*60*24))."天前";
+        } else if ($timepart < 60*60*24*30  && $timepart > 60*60*24*7){//一月以内
+            $str = floor($timepart / (60*60*24*7))."周前";
+        } else if ($timepart < 60*60*24*365  && $timepart > 60*60*24*30){//一年以内
+            $str = floor($timepart / (60*60*24*30))."个月前";
+        } else if ($timepart > 60*60*24*365){//一年以后
+            $str = floor($timepart / (60*60*24*365))."年前";
+        }
+    }
+    return $str;
+}
+/**
+ * php时间轴函数 ，刚刚、1分钟前、1小时前、一天前、两天前、具体日期
+ * 时间格式化
+ */
+function formatDate2($time){
+    $str = '';
+    if (!empty($time)){
+        $now =time();
+        $timepart = $now-$time;
+        if($timepart<= 60) //1分钟内
+        {
+            $str = "刚刚";
+        }
+        else if($timepart < 60*60 && $timepart > 60  ) //1小时内 显示多少分钟
+        {
+            $str = floor($timepart/60)."分钟前";
+        }
+        else if($timepart < 60*60*24  && $timepart > 60*60  ) //1天内 显示多少小时
+        {
+            $str = floor($timepart / (60*60))."小时前";
+        }
+        /* else if ($timepart < 60*60*24*3  && $timepart > 60*60*24) //3天内 显示1天前 2天前
+         {
+             $str = floor($timepart / (60*60*24))."天前";
+         }*/
+        else
+        {
+            $str = date('Y-m-d',$time); //超过3天 具体日期
+        }
+    }
+    return $str;
+}

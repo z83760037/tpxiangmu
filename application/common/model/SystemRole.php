@@ -6,7 +6,7 @@
  * Time: 16:13
  */
 
-namespace app\admin\model;
+namespace app\common\model;
 
 use app\admin\validate\isIdNotNull;
 use think\Model;

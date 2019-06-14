@@ -6,7 +6,7 @@
  * Time: 14:07
  */
 
-namespace app\admin\model;
+namespace app\common\model;
 
 
 class UserFeedback extends Base

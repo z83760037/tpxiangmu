@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>虎嗅网</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta name="renderer" content="webkit">
+    <meta name="baidu-site-verification" content="R9XA5lWxu2" />
+    <meta name="author" content="虎嗅网">
+    <meta name="keywords" content="科技资讯,商业评论,明星公司,动态,宏观,趋势,创业,精选,有料,干货,有用,细节,内幕">
+    <meta name="description" content="聚合优质的创新信息与人群，捕获精选|深度|犀利的商业科技资讯。在虎嗅，不错过互联网的每个重要时刻。">
+    <meta name="base-static-url" content="https://static.huxiucdn.com/www">
+    {include file="common/public"}
+    <script type="text/javascript">
+        var uid='0';
+        var username="";
+        var is_vip='';
+        var huxiu_hash_code='0032a41b28e199c9eb19566cddf64584';
+        var aid=0;
+
+        var itemId = '-1';
+        var signAna = 'b84e8d1452db24e986de3c0f1fdaf5f9b2d88b64';
+        var signTime = '1560393356';
+        var productId = '16';
+        var channel = 'huxiu';
+        var refer = 'https://www.huxiu.com/';
+
+        var order_api_host = 'https://order-api.huxiu.com';
+        var moment_api_host = 'https://moment-api.huxiu.com';
+        var message_api_host = 'https://message-api.huxiu.com';
+
+        var relatedArticle = '';
+        var url=window.location.href;
+        var str1=new RegExp('rec=man');
+        var str2=new RegExp('rec=sim');
+        if(str1.test(url)){
+            relatedArticle = 'manual';
+        } else if (str2.test(url)) {
+            relatedArticle = 'similar';
+        }
+
+        var cookiepre='HUXIU_016a_';
+        var _hmt = _hmt || [];
+        _hmt.push(['_setAccount', '324368ef52596457d064ca5db8c6618e']);
+        var isLogin = "noLogin";
+        _hmt.push(['_setCustomVar', 1, 'login', isLogin, 2]);
+
+        var comment_api_url = "https://comment-api.huxiu.com";
+        var huxiu_url = "https://www.huxiu.com";
+    </script>
+
+        <script type='text/javascript'>
+        !function(e,t,n,g,i){e[i]=e[i]||function(){(e[i].q=e[i].q||[]).push(arguments)},n=t.createElement("script"),tag=t.getElementsByTagName("script")[0],n.async=1,n.src=('https:'==document.location.protocol?'https://':'http://')+g,tag.parentNode.insertBefore(n,tag)}(window,document,"script","assets.growingio.com/2.1/gio.js","gio");
+        gio('init', 'b6a739d69e7ea5b6', {});
+        gio('setUserId', '0');
+        gio('send');
+    </script>
+
+</head>
+<!--PC系统级 提示信息-->
+<div class="message-prompt"></div>
+<body>
+
+<script type="text/javascript">
+    function checkinput(){
+        var input = $("#search-input").val();
+        if(input ==  null || input == ''){
+            return false;
+        }
+        return true;
+    }
+</script>
+<div id="login-reg-warp" class="login-reg-warp-modal">
+
+</div>
+<div class="search-box" id="search-box">
+    <i class="icon icon-search-close js-show-search-box"></i>
+
+    <div class="search-content">
+
+        <div class="search-input">
+            <form role="search" method="get" action="/search.html" onsubmit="return checkinput()">
+                <button type="submit"></button>
+                <input placeholder="请输入关键字" name="s" id="search-input">
+                                <input type="hidden" name="f" value="index_search">
+                            </form>
+        </div>
+        <div class="search-history hide" id="history">
+            <span>我的搜索历史</span>
+            <ul class="transition" id="history_ul">
+            </ul>
+            <div class="pull-right empty-history js-empty-history">清空历史</div>
+        </div>
+                <div class="search-history search-hot">
+            <strong>热搜词</strong>
+            <ul>
+                                <li class="transition"><a href="/search.html?s=婚姻">婚姻</a></li>
+                                <li class="transition"><a href="/search.html?s=东莞">东莞</a></li>
+                                <li class="transition"><a href="/search.html?s=女性">女性</a></li>
+                                <li class="transition"><a href="/search.html?s=区块链">区块链</a></li>
+                                <li class="transition"><a href="/search.html?s=台湾">台湾</a></li>
+                                <li class="transition"><a href="/search.html?s=中信集团">中信集团</a></li>
+                                <li class="transition"><a href="/search.html?s=奥克斯">奥克斯</a></li>
+                                <li class="transition"><a href="/search.html?s=小米手环">小米手环</a></li>
+                                <li class="transition"><a href="/search.html?s=互联网音乐">互联网音乐</a></li>
+                            </ul>
+        </div>
+            </div>
+</div>
+
+{include file="common/headre"}
+<div class="placeholder-height"></div>
+<div class="container" id="index">
+
+            <div class="wrap-left pull-left">
+        <div class="big-pic-box">
+                            <!--一级banner图-->
+                <div class="big-pic">
+                    <a href="/article/303575.html" target="_blank" class="transition">
+                        <div class="back-img">
+                            <img src="static/picture/221253778287.jpg"  alt="陈楸帆：在科幻的世界里认清现实">
+                        </div>
+                        <div class="big-pic-content">
+                            <h1 class="t-h1">陈楸帆：在科幻的世界里认清现实</h1>
+                        </div>
+                    </a>
+                </div>
+                        <!--二级banner图-->
+                            <!--<div class="big2-pic big2-pic-index big2-pic-index-top">-->
+                    <!--<a href="/article/303790.html" class="back-img transition" target="_blank" >-->
+                        <!--<img class="lazy" src="static/picture/080344396730.jpg"-->
+                             <!--alt="医改的难和易">-->
+                    <!--</a>-->
+                    <!--<a href="/article/303790.html" target="_blank" >-->
+                        <!--<div class="big2-pic-content">-->
+                            <!--<h2 class="t-h1">医改的难和易</h2>-->
+                        <!--</div>-->
+                    <!--</a>-->
+                <!--</div>-->
+            <!---->
+                            <!--<div class="big2-pic big2-pic-index big2-pic-index-bottom">-->
+                    <!--<a href="/article/303758.html" class="back-img transition" target="_blank" >-->
+                        <!--<img class="lazy" src="static/picture/215026127915.jpg"-->
+                             <!--alt="大疆这款机器人，想帮你教育孩子">-->
+                    <!--</a>-->
+                    <!--<a href="/article/303758.html" target="_blank">-->
+                        <!--<div class="big2-pic-content">-->
+                            <!--<h2 class="t-h1">大疆这款机器人，想帮你教育孩子</h2>-->
+                        <!--</div>-->
+                    <!--</a>-->
+                <!--</div>-->
+                    </div>
+
+
+            <!--文章列表-->
+        <div class="mod-info-flow">
+            {volist name= 'article' id = 'vo'}
+            <div class="mod-b mod-art clearfix " data-aid="303814">
+                <!--栏目链接-->
+
+                <div class="mod-thumb pull-left ">
+                    <a class="transition"  href="{:url('article/info',['id' => $vo.id])}" target="_blank">
+                                                    <!--文章图片-->
+                        <img class="lazy" data-original="static/picture/094715838994.jpg" alt="社群经济注定是“历史”，而不是未来" src="{$vo.img}">
+                    </a>
+                </div>
+                <div class="mob-ctt index-article-list-yh">
+                    <h2><a href="{:url('article/info',['id' => $vo.id])}" class="transition msubstr-row2" target="_blank">{$vo.title}</a></h2>
+
+                    <div class="mob-author">
+                        <div class="author-face">
+                            <a href="{:url('member/info',['id' => $vo.uid])}" target="_blank"><img src="{$vo.nameImg}"></a>
+                        </div>
+                        <a href="{:url('member/info',['id' => $vo.uid])}" target="_blank">
+                            <span class="author-name ">{$vo.name}</span>
+                        </a>
+                        <span class="time">{:formatDate(strtotime($vo.created))}</span>
+                        <i class="icon icon-cmt"></i><em>{$vo.commen}</em>
+                        <i class="icon icon-fvr"></i><em>{$vo.collect}</em>
+                    </div>
+
+                    <!--外部文章/内部文章两者取其一-->
+                    <div class="mob-sub">
+                        {$vo.description}
+                    </div>
+                </div>
+                <!--文章Tag展示-->
+                <div class="column-link-box">
+                    <a href="/channel/112.html" class="column-link" target="_blank">{$vo.cate.name}</a>
+                </div>
+            </div>
+            {/volist}
+        </div>
+    
+        <div class="get-mod-more js-get-mod-more-list transition" data-cur_page="1" data-last_dateline="1560332940">
+            点击加载更多
+        </div>
+
+        
+    </div>
+    <div class="wrap-right pull-right">
+        <div class="right-ad-box">
+        </div>
+
+<!--24小时部分开始1-->
+<script type="text/javascript" src="__STATIC__/index/js/model_hours.js"></script>
+<link rel="stylesheet" type="text/css" href="__STATIC__/index/css/moment.css">
+<div id="moment"></div>
+<div class="box-moder moder-story-list">
+    <h3>24小时</h3>
+    <span class="pull-right project-more story-more"><a href="/moment.html" class="transition index-24-right js-index-24-right" target="_blank">查看全部</a></span>
+    <span class="span-mark"></span>
+    <div class="story-box-warp hour-box-warp">
+        <div class="nano">
+            <div class="overthrow nano-content description" tabindex="0">
+                <ul class="box-list mt-box-list" id="homepage-moment-list">
+                    <!--公共24小时列表部分-->
+                    {volist name='articleNew' id='vo'}
+                                <li>
+            <input value="1560393320" class="moment-dateline-value" type="hidden"/>
+            <div class="story-content">
+                <div class="mt-story-title js-story-title" story-data-show="true">
+                    <p class="transition hour-arrow">
+                        <span class="icon icon-caret js-mt-index-icon"></span>
+                    </p>
+                    <ul class="hour-head">
+                        <li><img class="hour-tx" src="{$vo.nameImg}" alt="头像"></li>
+                        <li>
+                            <p>{$vo.name}</p>
+                            <p>{:formatDate2(strtotime($vo.created))}</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="mt-index-info-parent">
+                    <div class="story-info mt-story-info">
+                        <p class="story-detail-hide hour-detail-hide mt-index-cont mt-index-cont2 js-mt-index-cont2">{$vo.title}<br><br>{$vo.content}</p>
+                        <div class="mt-index-end">
+                            <div class="mt-index-realend">...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    <input type="hidden" id="moment_is_have_next_page_0" value="1">
+                {/volist}
+                </ul>
+            </div>
+            <div class="nano-pane">
+                <div class="nano-slider" style="height: 179px; transform: translate(0px, 0px);"></div>
+            </div>
+        </div>
+    </div>
+    <div class="js-more-moment" data-cur_page="0"></div>
+</div>
+<div class="placeholder"></div>
+<!--24小时部分结束1-->
+
+    <!--<div class="box-moder moder-project-list">-->
+        <!--<h3>创新快车道</h3>-->
+        <!--<span class="pull-right project-more"><a href="/chuangye" class="transition" target="_blank">全部</a></span>-->
+        <!--<span class="span-mark"></span>-->
+        <!--<ul>-->
+                            <!--<li>-->
+                    <!--<div class="project-pic">-->
+                        <!--<img src="static/picture/1548515977055259.png">-->
+                    <!--</div>-->
+                    <!--<div class="project-content">-->
+                        <!--<div class="project-title">-->
+                            <!--<a href="/chuangye/product/61653" class="transition" target="_blank">西井科技 WestWellLab</a>-->
+                        <!--</div>-->
+                        <!--<p>类脑强人工智能商业公司</p>-->
+                    <!--</div>-->
+                <!--</li>-->
+                            <!--<li>-->
+                    <!--<div class="project-pic">-->
+                        <!--<img src="static/picture/1548512669544733.jpg">-->
+                    <!--</div>-->
+                    <!--<div class="project-content">-->
+                        <!--<div class="project-title">-->
+                            <!--<a href="/chuangye/product/61649" class="transition" target="_blank">图森未来 TuSimple</a>-->
+                        <!--</div>-->
+                        <!--<p>城际物流运输自动驾驶解决方案提供商</p>-->
+                    <!--</div>-->
+                <!--</li>-->
+                            <!--<li>-->
+                    <!--<div class="project-pic">-->
+                        <!--<img src="static/picture/1548597217034046.jpg">-->
+                    <!--</div>-->
+                    <!--<div class="project-content">-->
+                        <!--<div class="project-title">-->
+                            <!--<a href="/chuangye/product/61667" class="transition" target="_blank">云从科技</a>-->
+                        <!--</div>-->
+                        <!--<p>人脸识别及计算机视觉</p>-->
+                    <!--</div>-->
+                <!--</li>-->
+                    <!--</ul>-->
+        <!--<div class="project-btn-box">-->
+            <!--<a class="js-open-cy btn btn-blue-cy transition">立即报名，获得曝光机会！</a>-->
+        <!--</div>-->
+        <!--<ul class="project-info">-->
+            <!--<li>创业公司立即报名提交信息的好处：</li>-->
+            <!--<li>1.优质的展示和访谈机会</li>-->
+            <!--<li>2.获得投资人的关注</li>-->
+            <!--<li>3.虎嗅提供的创业支持服务</li>-->
+        <!--</ul>-->
+    <!--</div>-->
+    <!--<div class="placeholder"></div>-->
+
+
+
+
+<!--研究报告部分开始-->
+    <!--<div class="box-moder hot-article hp-column-article">-->
+        <!--<h3>深案例</h3>-->
+        <!--<span class="pull-right project-more story-more">-->
+            <!--<a href="/vipColumn/contentList/3.html" class="transition" target="_blank">全部</a>-->
+        <!--</span>-->
+        <!--<span class="span-mark"></span>-->
+        <!--<ul>-->
+            <!---->
+            <!--<li>-->
+                <!--<div class="hot-article-img">-->
+                    <!--<a href="/article/303485.html" target="_blank">-->
+                        <!--<img src="static/picture/160028585107.jpg">-->
+                    <!--</a>-->
+                <!--</div>-->
+                <!--<a href="/article/303485.html" class="transition" target="_blank">阿里的顶层设计该为盒马背锅吗？</a>-->
+                <!--<div style="margin-top: 5px;color: #bbbbbb;">-->
+                        <!--盒马鲜生连同其它几家阿里巴巴附属公司给后者2019财年报告添上一项254亿支出，但这并非盒马关店的主要原因。-->
+                <!--</div>-->
+            <!--</li>-->
+                    <!--</ul>-->
+        <!--<div class="report-explain">-->
+            <!--全年30+篇 案例分析，复盘有代表性的创新公司，还原商业成功背后的魔鬼细节。-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="placeholder"></div>-->
+    
+<div class="box-moder hot-article hp-hot-article">
+    <h3>热文</h3>
+    <span class="span-mark"></span>
+    <ul>
+        {volist name='articleHit' id='vo'}
+        <li>
+            <div class="hot-article-img">
+                <a href="{:url('article/info',['id' => $vo.id])}" target="_blank" title="{$vo.title}">
+                    <img src="{$vo.img}">
+                </a>
+            </div>
+                <a href="{:url('article/info',['id' => $vo.id])}" class="transition" target="_blank">{$vo.title}</a>
+        </li>
+        {/volist}
+    </ul>
+</div>
+<div class="placeholder"></div>
+
+    </div>
+</div>
+<div id="imgs"></div>
+{include file="common/footer"}
+
+
+<script type="text/javascript" src="__STATIC__/index/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="__STATIC__/index/js/jquery.detection.js"></script>
+<script type="text/javascript" src="__STATIC__/index/js/sea.js"></script>
+<script type="text/javascript">
+    var base_static_url = $('meta[name="base-static-url"]').attr('content');
+    seajs.config({
+        base: (!!base_static_url) ? base_static_url + '/static_2015/js/' : '/static_2015/js/',
+        comboSyntax: ['??', ','],
+        alias: {
+            'jquery': 'jquery-1.11.1.min',
+            'bootstrap': 'bootstrap.min',
+            'sea_combo_flush': 'sea_combo_flush.js',
+            'cookie': 'jquery.cookie',
+            's_css': 'seajs_css'
+        },
+        'map': [
+
+            [/^(.*\.(?:css|js))(.*)$/i, '$1?v=201905311533']
+
+        ],
+        charset: 'utf-8'
+    });
+    seajs.use(['init']);
+</script>
+<script type="text/javascript" src="__STATIC__/index/js/seajs_css.js"></script>
+
+<script src="__STATIC__/index/js/wxlogin.js"></script>
+
+<!--[if lt IE 10]>
+<script type="text/javascript">
+
+    if( !('placeholder' in document.createElement('input')) ){
+        $('input[placeholder],textarea[placeholder]').each(function(){
+            var that = $(this),
+                text= that.attr('placeholder');
+            if(that.val()===""){
+                that.val(text).addClass('placeholder');
+            }
+            that.focus(function(){
+                if(that.val()===text){
+                    that.val("").removeClass('placeholder');
+                }
+            })
+                .blur(function(){
+                    if(that.val()===""){
+                        that.val(text).addClass('placeholder');
+                    }
+                })
+                .closest('form').submit(function(){
+                    if(that.val() === text){
+                        that.val('');
+                    }
+                });
+        });
+    }
+
+    function hasClass(element, className) {
+        var reg = new RegExp('(\\s|^)'+className+'(\\s|$)');
+        return element.className.match(reg);
+    }
+    function addClass(element, className) {
+        if (!this.hasClass(element, className))
+        {
+            element.className += " "+className;
+        }
+    }
+    function removeClass(element, className) {
+        if (hasClass(element, className)) {
+            var reg = new RegExp('(\\s|^)'+className+'(\\s|$)');
+            element.className = element.className.replace(reg,' ');
+        }
+    }
+    var search = document.getElementById('search-box');
+    addClass(search, 'search-box-last');
+    addClass(search, 'hide');
+</script>
+<![endif]-->
+
+
+
+<script type="text/javascript">
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+
+</script>
+
+<script type="text/javascript">
+    //文章内容页里有序列表样式
+    var ol = $('ol');
+    ol.each(function(){
+        var t = $(this);
+        if(t.find('span.text-remarks').length>0){
+            var remarkColor = t.find('span.text-remarks').css("color");
+            t.css({
+                'color': remarkColor
+            })
+        }
+        if(t.find('span.text-hxzhu').length>0){
+            var hxzhuColor = t.find('span.text-hxzhu').css("color");
+            t.css({
+                'color': hxzhuColor
+            });
+        }
+    });
+
+</script></body>
+
+</html>
