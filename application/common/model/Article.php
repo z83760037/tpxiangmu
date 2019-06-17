@@ -8,6 +8,8 @@
 namespace app\common\model;
 
 
+use app\web\exception\ArticleException;
+use think\Db;
 use think\Model;
 
 class Article extends Model
@@ -79,5 +81,60 @@ class Article extends Model
     public function hit($limit)
     {
        return $this->where('status',1)->order('hits desc')->limit($limit)->select();
+    }
+
+    //文章详情页
+    public function getArticleById($aid,$status)
+    {
+        $data = $this->where('status',$status)
+            ->where('is_delete',0)
+            ->field('id,uid,cid,title,keywords,description,hits,created,type,content')
+            ->find($aid);
+
+        if (empty($data)) {
+            throw new ArticleException();
+        }
+        if ($data['type'] == 1) {
+            $data['name'] = db('system_user')->where('id',$data['uid'])->value('name');
+            $data['nameImg'] = db('author')->where('id',$data['uid'])->value('img');
+        } elseif ($data['type'] == 2) {
+            $data['name'] = db('user')->where('id',$data['uid'])->value('name');
+            $data['nameImg'] = db('user')->where('id',$data['uid'])->value('img');
+        }
+
+        return $data;
+    }
+
+    //相关资讯
+    public function otherArticle($aid)
+    {
+        if (empty($aid)) {
+            return false;
+        }
+
+        $data    = $this->getArticleById($aid,1);
+        $keyWord = $data ? $data['keywords'] : null;
+
+        $keyWordArr = $keyWord ? explode(',',$keyWord) : null;
+
+        if(empty($keyWordArr) || !is_array($keyWordArr)) {
+            return '';
+        }
+        $where = 'is_delete = 0 and status = 1 and (';
+
+        $i = 0;
+        $count = count($keyWordArr);
+        foreach ($keyWordArr as $v) {
+            $where .= " keywords like '%".$v."%' ";
+            $i++;
+            if ($i < $count) {
+                $where .= " or ";
+            }
+        }
+        $where .= ')';
+
+        $arr = $this->where($where)->where('id','<>',$aid)->field('id,img,title')->limit(5)->select();
+
+        return $arr;
     }
 }

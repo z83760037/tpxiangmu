@@ -8,15 +8,10 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
+//use think\Route;
 
-// Route::get('think', function () {
-//     return 'hello,ThinkPHP5!';
-// });
-
-// Route::get('hello/:name', 'index/hello');
-
-// return [
-
-// ];
-
-// Route::get('admin', 'admin/index/index')->middleware('Check');
+//文章
+Route::group('api/:version/article',function(){
+    Route::get('/','web/:version.article/getArticleLimit');//文章分页数据
+    Route::get('/detail/:aid','web/:version.article/detail');//文章详情
+});
