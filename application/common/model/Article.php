@@ -48,7 +48,7 @@ class Article extends Model
 
         $data = $this->with(['cate' => function($query){
                 $query->field('id,name');
-        }])->where($where)->limit($lit,$size)->order('created desc')->select();
+        }])->where($where)->limit($lit,$size)->field('id,uid,cid,title,keywords,description,hits,img,created,status,balance,type,onlineTime')->order('created desc')->select();
 
         foreach ($data as &$v){
             if ($v['type'] == 1) {

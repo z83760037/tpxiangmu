@@ -9,9 +9,11 @@
 namespace app\web\controller\v1;
 
 
+use app\web\exception\BaseException;
+use app\web\validate\CollectionValidate;
+use app\web\validate\Common;
 use app\web\validate\isIdNotNull;
 use app\web\exception\ArticleException;
-use app\web\exception\BaseException;
 use think\Controller;
 
 class Article extends Controller
@@ -65,8 +67,50 @@ class Article extends Controller
     /*  url web/api/v1/common/aid
      *  文章评论
      */
-    public function commentLoadMore($aid,$page,$limit)
+    public function commentLoadMore($aid,$page = 1,$limit = 10)
     {
         $data = model('ArticleCommen')->getCommonDataByAid($aid,$page,$limit);
+        return json($data);
+    }
+
+    //文章列表轮播
+    public function headlineData()
+    {
+        $data = model('ArticleHeadline')->where('status' ,1)->order('created desc')->select();
+
+        if (empty($data)) {
+            throw new ArticleException();
+        }
+        return json($data);
+    }
+
+    //评论
+    public function msg()
+    {
+        (new Common())->goCheck();//数据验证
+        $data = request()->param();
+
+        $res = model('ArticleCommen')->addComment($data);
+
+        if ($res) {
+            $user = model('ArticleCommen')->getCommenById(model('ArticleCommen')->id);
+           return show_json($user);
+        } else {
+            throw new BaseException(['msg' => '添加失败']);
+        }
+    }
+
+    //文章收藏
+    public function Collection()
+    {
+        (new CollectionValidate())->goCheck();
+        $data = request()->param();
+        $res = model('UserCollect')->add($data);
+
+        if ($res) {
+            return json(['errorCode'=> 0,'msg' => '成功']);
+        } else {
+            return json(['errorCode'=> -1,'msg' => '失败']);
+        }
     }
 }

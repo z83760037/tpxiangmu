@@ -13,5 +13,9 @@
 //文章
 Route::group('api/:version/article',function(){
     Route::get('/','web/:version.article/getArticleLimit');//文章分页数据
-    Route::get('/detail/:aid','web/:version.article/detail');//文章详情
+    Route::get('/detail/','web/:version.article/detail');//文章详情
+    Route::get('/common/','web/:version.article/commentLoadMore');//文章详情
+    Route::get('/headline','web/:version.article/headlineData');//轮播图
+    Route::post('/common/msg','web/:version.article/msg');//评论添加
+    Route::post('/Collection','web/:version.article/Collection');//文章收藏
 });

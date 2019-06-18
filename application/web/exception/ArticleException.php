@@ -13,6 +13,6 @@ class ArticleException extends BaseException
 {
     public $code = 404;
 
-    public $msg = '没有文章数据';
+    public $msg = '没有数据';
 
 }

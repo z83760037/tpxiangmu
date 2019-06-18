@@ -163,3 +163,8 @@ function formatDate2($time){
     }
     return $str;
 }
+
+//返回json数据
+function show_json($data) {
+    return json(['errorCode' => 0 , 'data' => $data]);
+}
