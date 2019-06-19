@@ -29,4 +29,10 @@ class UserCollect extends Base
             return  $this->where('aid',$data['aid'])->where('uid',$data['uid'])->delete();
         }
     }
+
+    //用户收藏
+    public function myCollectData($uid,$page,$limit)
+    {
+        
+    }
 }

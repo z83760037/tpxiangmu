@@ -18,4 +18,5 @@ Route::group('api/:version/article',function(){
     Route::get('/headline','web/:version.article/headlineData');//轮播图
     Route::post('/common/msg','web/:version.article/msg');//评论添加
     Route::post('/Collection','web/:version.article/Collection');//文章收藏
+    Route::get('/hits','web/:version.article/hits');//更新浏览量
 });

@@ -15,6 +15,8 @@ use app\web\validate\Common;
 use app\web\validate\isIdNotNull;
 use app\web\exception\ArticleException;
 use think\Controller;
+use think\Db;
+use think\Exception;
 
 class Article extends Controller
 {
@@ -49,8 +51,6 @@ class Article extends Controller
     public function detail($aid)
     {
         (new isIdNotNull())->goCheck();
-        model('Article')->where('id',$aid)->setInc('hits');   // 原数值加1
-        model('Article')->where('id',$aid)->setInc('balance',0.04);   // 原数值加1
 //        $key = 'article'.$aid;
 //        //获取缓存
 //        $cacheData = cache($key);
@@ -112,5 +112,23 @@ class Article extends Controller
         } else {
             return json(['errorCode'=> -1,'msg' => '失败']);
         }
+    }
+
+    //浏览量
+    public function hits($aid)
+    {
+        Db::startTrans();
+        try{
+            $data = model('Article')->find($aid);
+            $data->setInc('hits');   // 原数值加1
+            $data->setInc('balance',0.04);   // 原数值加1
+            model('User')->where('id',$data['uid'])->setInc('balance',0.04);   // 原数值加1
+            Db::commit();
+            return json(['errorCode' => 0, 'msg' => '成功']);
+        } catch (\Exception $e) {
+            Db::rollback();
+            throw new BaseException(['msg' => $e->getMessage()]);
+        }
+
     }
 }
