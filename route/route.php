@@ -17,6 +17,12 @@ Route::group('api/:version/article',function(){
     Route::get('/common/','web/:version.article/commentLoadMore');//文章详情
     Route::get('/headline','web/:version.article/headlineData');//轮播图
     Route::post('/common/msg','web/:version.article/msg');//评论添加
-    Route::post('/Collection','web/:version.article/Collection');//文章收藏
+    Route::post('/collection','web/:version.article/Collection');//文章收藏
     Route::get('/hits','web/:version.article/hits');//更新浏览量
+});
+
+
+//用户
+Route::group('api/:version/user',function(){
+    Route::get('/favorites','web/:version.user/favorites');//我的收藏
 });

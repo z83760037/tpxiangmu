@@ -119,15 +119,33 @@ class Article extends Controller
     {
         Db::startTrans();
         try{
-            $data = model('Article')->find($aid);
-            $data->setInc('hits');   // 原数值加1
-            $data->setInc('balance',0.04);   // 原数值加1
-            model('User')->where('id',$data['uid'])->setInc('balance',0.04);   // 原数值加1
+            $ip = request()->ip();
+            $browse = model('UserBrowse')->where('bid',$aid)->where('ip',$ip)->find();
+
+            if (empty($browse)) {
+                $data = model('Article')->find($aid);
+                $data->setInc('hits');   // 原数值加1
+                $data->setInc('balance',0.04);   // 原数值加1
+                model('User')->where('id',$data['uid'])->setInc('balance',0.04);   // 原数值加1
+                model('UserBrowse')->save(['bid'=>$aid,'ip'=>$ip,'type'=>1,'created' => time()]);
+            } else {
+                $time = time();
+                if (($time-$browse['created']) > 3600) {
+                    $data = model('Article')->find($aid);
+                    $data->setInc('hits');   // 原数值加1
+                    $data->setInc('balance',0.04);   // 原数值加1
+                    model('User')->where('id',$data['uid'])->setInc('balance',0.04);
+                    model('UserBrowse')->where('bid',$aid)->where('ip',$ip)->update(['created'=>$time]);
+                } else {
+                    return json(['errorCode' => 10000, 'msg' => ($time-$browse['created'])]);
+                }
+            }
             Db::commit();
             return json(['errorCode' => 0, 'msg' => '成功']);
         } catch (\Exception $e) {
             Db::rollback();
-            throw new BaseException(['msg' => $e->getMessage()]);
+//            throw new ArticleException(['msg' => $e->getMessage()]);
+            return json(['errorCode' => 10000, 'msg' => $e->getMessage()],404);
         }
 
     }
