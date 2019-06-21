@@ -137,4 +137,17 @@ class Article extends Model
 
         return $arr;
     }
+
+    //我的文章
+    public function getMyArticle($uid)
+    {
+        $data = $this->where('uid',$uid)
+            ->where('type',2)
+            ->field('id,title,img,created,hits')
+            ->order('id desc')->select();
+        foreach($data as &$v) {
+            $v['created'] = formatDate($v['created']);
+        }
+        return $data;
+    }
 }

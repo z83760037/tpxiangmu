@@ -40,4 +40,16 @@ class ArticleNews extends Base
 
         return $this->save($data);
     }
+
+    //用户的快讯
+    public function getMyNews($uid)
+    {
+        $data = $this->where('uid',$uid)
+            ->where('type',2)
+            ->order('id desc')->select();
+        foreach($data as &$v) {
+            $v['created'] = formatDate($v['created']);
+        }
+        return $data;
+    }
 }
