@@ -42,13 +42,14 @@ class ArticleNews extends Base
     }
 
     //用户的快讯
-    public function getMyNews($uid)
+    public function getMyNews($uid,$type)
     {
         $data = $this->where('uid',$uid)
-            ->where('type',2)
-            ->order('id desc')->select();
+            ->where('type',$type)
+            ->order('id desc')
+            ->select();
         foreach($data as &$v) {
-            $v['created'] = formatDate($v['created']);
+            $v['formatDate'] = formatDate(strtotime($v['created']));
         }
         return $data;
     }

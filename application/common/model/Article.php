@@ -139,10 +139,10 @@ class Article extends Model
     }
 
     //我的文章
-    public function getMyArticle($uid)
+    public function getMyArticle($uid,$type)
     {
         $data = $this->where('uid',$uid)
-            ->where('type',2)
+            ->where('type',$type)
             ->field('id,title,img,created,hits')
             ->order('id desc')->select();
         foreach($data as &$v) {

@@ -115,27 +115,38 @@ class Article extends Controller
     }
 
     //浏览量
-    public function hits($aid)
+    public function hits($aid,$uid)
     {
         Db::startTrans();
         try{
             $ip = request()->ip();
-            $browse = model('UserBrowse')->where('bid',$aid)->where('ip',$ip)->find();
+            if (!empty($uid)) {
+                $browse = model('UserBrowse')->where('bid',$aid)->where('uid',$uid)->find();
+            } else {
+                $browse = model('UserBrowse')->where('bid',$aid)->where('ip',$ip)->find();
+            }
 
             if (empty($browse)) {
                 $data = model('Article')->find($aid);
                 $data->setInc('hits');   // 原数值加1
                 $data->setInc('balance',0.04);   // 原数值加1
-                model('User')->where('id',$data['uid'])->setInc('balance',0.04);   // 原数值加1
-                model('UserBrowse')->save(['bid'=>$aid,'ip'=>$ip,'type'=>1,'created' => time()]);
+                if ($data['type'] == 1) {
+//                    model('SystemUser')->where('id',$data['uid'])->setInc('balance',0.04);   // 原数值加1
+                } else {
+                    model('User')->where('id',$data['uid'])->setInc('balance',0.04);   // 原数值加1
+                }
+
+                model('UserBrowse')->save(['bid' => $aid, 'ip' => $ip, 'type' => 1,'created' => time(), 'uid' => $uid]);
             } else {
                 $time = time();
                 if (($time-$browse['created']) > 3600) {
                     $data = model('Article')->find($aid);
                     $data->setInc('hits');   // 原数值加1
                     $data->setInc('balance',0.04);   // 原数值加1
-                    model('User')->where('id',$data['uid'])->setInc('balance',0.04);
-                    model('UserBrowse')->where('bid',$aid)->where('ip',$ip)->update(['created'=>$time]);
+                    if ($data['type'] == 2) {
+                        model('User')->where('id',$data['uid'])->setInc('balance',0.04);
+                    }
+                    $browse->save(['created'=>$time]);
                 } else {
                     return json(['errorCode' => 10000, 'msg' => ($time-$browse['created'])]);
                 }

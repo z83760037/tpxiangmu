@@ -25,5 +25,6 @@ Route::group('api/:version/article',function(){
 //用户
 Route::group('api/:version/user',function(){
     Route::get('/favorites','web/:version.user/favorites');//我的收藏
-    Route::get('/myAction','web/:version.user/Asss');//我的收藏
+    Route::get('/myArticle','web/:version.user/userArticle');//我的文章
+    Route::get('/myNews','web/:version.user/userNews');//我的收藏
 });
