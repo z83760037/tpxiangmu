@@ -96,10 +96,15 @@ class ArticleCommen extends Base
         $data = $this->alias('c')
             ->join('article a','c.aid=a.id','left')
             ->where('c.uid',$uid)
-            ->field('c.*,a.title,a.id as article_id')
+            ->field('c.id,c.aid,c.content,c.created,a.title')
             ->order('c.created desc')
             ->limit($size,$limit)
             ->select();
+
+        foreach ($data as &$v) {
+            $v['created1'] =  formatDate(strtotime($v['created']));
+        }
+        
         return $data;
     }
 }
