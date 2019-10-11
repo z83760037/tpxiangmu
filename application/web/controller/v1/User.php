@@ -22,13 +22,6 @@ class User extends Collection
        $yanzheng = Token::ifUserlogin();
     }
 
-    //我的收藏
-    public function favorites($uid,$page = 1,$limit = 10)
-    {
-        $data = model('UserCollect')->myCollectData($uid,$page,$limit);
-        return json($data);
-    }
-
     //我文章
     public function userArticle($uid,$type)
     {
@@ -43,5 +36,24 @@ class User extends Collection
         return json($data);
     }
 
-    //
+    public function mine($uid)
+    {
+        $data = Model('User')->myData($uid);
+        return json($data);
+    }
+
+
+    //我的收藏
+    public function favorites($uid,$page = 1,$limit = 10)
+    {
+        $data = model('UserCollect')->myCollectData($uid,$page,$limit);
+        return json($data);
+    }
+
+    //我的评论
+    public function myComment($uid,$page=1,$limit=10)
+    {
+        $data = model('ArticleCommen')->getMyCommentData($uid,$page,$limit);
+        return json($data);
+    }
 }

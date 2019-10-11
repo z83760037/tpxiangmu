@@ -59,10 +59,8 @@ class ArticleCommen extends Base
                 ->select();
 
             foreach ($replyData as $kk => &$vv) {
-//                $replyData[$kk]['created'] = formatDate(strtotime($vv['created']));
                 $replyData[$kk]['created1'] = formatDate(strtotime($vv['created']));
             }
-//            $v['created'] = strtotime($v['created']);
             $v['created1'] = formatDate(strtotime($v['created']));
         $data[$k]['reply']   = $replyData;
     }
@@ -88,6 +86,20 @@ class ArticleCommen extends Base
             $data['fuser'] =  model('user')->field('id,name,img')->find($data['reply_uid']);
         }
         $data['created1'] =  formatDate(strtotime($data['created']));
+        return $data;
+    }
+
+    //我的评论
+    public function getMyCommentData($uid,$page,$limit)
+    {
+        $size = ($page-1)*$limit;
+        $data = $this->alias('c')
+            ->join('article a','c.aid=a.id','left')
+            ->where('c.uid',$uid)
+            ->field('c.*,a.title,a.id as article_id')
+            ->order('c.created desc')
+            ->limit($size,$limit)
+            ->select();
         return $data;
     }
 }

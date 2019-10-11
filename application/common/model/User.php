@@ -48,5 +48,11 @@ class User extends Base
         }
     }
 
-
+    public function myData($uid)
+    {
+        $common = model('ArticleCommen')->where('uid',$uid)->count();//评论数
+        $collect = model('UserCollect')->where('uid',$uid)->count();//收藏数
+        $follow = model('UserFollow')->where('uid',$uid)->count();//关注数
+        return ['commen' => $common, 'collect' => $collect, 'follow' => $follow];
+    }
 }

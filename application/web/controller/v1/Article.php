@@ -51,16 +51,16 @@ class Article extends Controller
     public function detail($aid)
     {
         (new isIdNotNull())->goCheck();
-//        $key = 'article'.$aid;
-//        //获取缓存
-//        $cacheData = cache($key);
-//        if (!empty($cacheData)) {
-//            return json($cacheData);
-//        }
+       $key = 'article'.$aid;
+       //获取缓存
+       $cacheData = cache($key);
+       if (!empty($cacheData)) {
+           return json($cacheData);
+       }
         //文章详情
         $data['article'] = model('Article')->getArticleById($aid,1);
         $data['otherArticleData'] = model('Article')->otherArticle($aid);
-//        cache($key,$data,43200);
+       cache($key,$data,43200);
         return json($data);
     }
 
