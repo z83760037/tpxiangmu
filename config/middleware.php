@@ -15,4 +15,5 @@
 return [
     // 默认中间件命名空间
     'login' => 'app\\http\\middleware\\Log',
+    'auth' => 'app\http\middleware\Auth',
 ];
