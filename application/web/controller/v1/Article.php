@@ -28,7 +28,7 @@ class Article extends Controller
      */
     public function getArticleLimit($page = 1,$limit = 10)
     {
-        
+
         $key = 'ArticleLimit'.$page;
         //获取缓存
         $cacheData = cache($key);
