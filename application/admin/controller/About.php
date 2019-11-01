@@ -20,6 +20,7 @@ class About extends Base
 
     public function open($page,$limit)
     {
+
         $size = ($page-1)*$limit;
 
         $data = model('About')->limit($size,$limit)->select();
