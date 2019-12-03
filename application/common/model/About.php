@@ -8,8 +8,6 @@
 
 namespace app\common\model;
 
-
-
 class About extends Base
 {
     //数据添加
